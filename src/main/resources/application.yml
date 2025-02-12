@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: hello-search-api
+  elasticsearch:
+    host: localhost
+    api-key: uEIFOUF8RLCv8kNaQsgEQA
+    uris: http://localhost:9200
+    username: elastic
+    password: changeme
