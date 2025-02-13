@@ -7,3 +7,20 @@ spring:
     uris: http://localhost:9200
     username: elastic
     password: changeme
+    fingerprint: 8D:54:3B:07:80:55:0B:D1:19:94:72:0D:BF:C6:64:DB:98:25:DD:43:1E:91:DE:3C:82:B2:0E:A3:BA:B3:7B:AE
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+
+server:
+  port: 9999
+
+logging:
+  level:
+    org:
+      springframework:
+        data:
+          elasticsearch:
+            client:
+              WIRE: trace

@@ -23,15 +23,20 @@ public class ElasticSearchConfig extends ElasticsearchConfiguration {
     @Value("${spring.elasticsearch.host}")
     private String host;
 
+    @Value("${spring.elasticsearch.fingerprint}")
+    private String fingerprint;
+
     @Override
     public ClientConfiguration clientConfiguration() {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "ApiKey " + apiKey);
         return ClientConfiguration.builder()
             .connectedTo(host)
-            .usingSsl()
+            .usingSsl(fingerprint)
             .withDefaultHeaders(headers)
             .withBasicAuth(username, password)
             .build();
     }
+
+
 }
