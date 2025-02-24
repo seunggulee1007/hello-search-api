@@ -8,6 +8,7 @@ import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.core.search.SourceConfig;
 import co.elastic.clients.elasticsearch.core.search.TotalHits;
 import co.elastic.clients.elasticsearch.core.search.TotalHitsRelation;
+import com.emotionalcart.hellosearchapi.elastic.ElasticProduct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -95,16 +96,16 @@ public class SearchController {
     }
 
     @GetMapping("/autocomplete/{keyword}")
-    public List<Product> autocomplete(@PathVariable String keyword) throws IOException {
+    public List<ElasticProduct> autocomplete(@PathVariable String keyword) throws IOException {
         Query query = Query.of(q -> q.prefix(p -> p.field("name").value(keyword)));
         SourceConfig sourceConfig = SourceConfig.of(sc -> sc.filter(sf -> sf.includes("id","name", "description")));
         SearchRequest request = SearchRequest.of(s -> s.index("my_index").source(sourceConfig).query(query).size(5));
-        SearchResponse<Product> response = esClient.search(request, Product.class);
+        SearchResponse<ElasticProduct> response = esClient.search(request, ElasticProduct.class);
         return response.hits().hits().stream().map(Hit::source).toList();
     }
 
     @GetMapping("/similar/{productId}")
-    public List<Product> similar(@PathVariable String productId) throws IOException {
+    public List<ElasticProduct> similar(@PathVariable String productId) throws IOException {
         Query query = Query.of(q -> q
             .moreLikeThis(mlt -> mlt
                 .fields("name", "description", "tags") // 유사도를 비교할 필드
@@ -120,7 +121,7 @@ public class SearchController {
         );
 
         SearchRequest request = SearchRequest.of(s -> s.index("products").query(query).size(5));
-        SearchResponse<Product> response = esClient.search(request, Product.class);
+        SearchResponse<ElasticProduct> response = esClient.search(request, ElasticProduct.class);
         return response.hits().hits().stream().map(Hit::source).toList();
     }
 

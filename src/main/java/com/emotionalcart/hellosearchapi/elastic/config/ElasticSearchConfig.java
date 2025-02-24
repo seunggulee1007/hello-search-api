@@ -1,5 +1,7 @@
-package com.emotionalcart.hellosearchapi;
+package com.emotionalcart.hellosearchapi.elastic.config;
 
+import com.emotionalcart.hellosearchapi.elastic.properties.ElasticProperties;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
@@ -9,32 +11,20 @@ import org.springframework.data.elasticsearch.support.HttpHeaders;
 
 @Configuration
 @EnableElasticsearchRepositories
+@RequiredArgsConstructor
 public class ElasticSearchConfig extends ElasticsearchConfiguration {
 
-    @Value("${spring.elasticsearch.username}")
-    private String username;
+    private final ElasticProperties elasticProperties;
 
-    @Value("${spring.elasticsearch.password}")
-    private String password;
-
-    @Value("${spring.elasticsearch.api-key}")
-    private String apiKey;
-
-    @Value("${spring.elasticsearch.host}")
-    private String host;
-
-    @Value("${spring.elasticsearch.fingerprint}")
-    private String fingerprint;
-
+//
     @Override
     public ClientConfiguration clientConfiguration() {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Authorization", "ApiKey " + apiKey);
+//        headers.add("Authorization", "ApiKey " + apiKey);
         return ClientConfiguration.builder()
-            .connectedTo(host)
-            .usingSsl(fingerprint)
-            .withDefaultHeaders(headers)
-            .withBasicAuth(username, password)
+            .connectedTo(elasticProperties.getHost())
+            .usingSsl(elasticProperties.getFingerprint())
+            .withBasicAuth(elasticProperties.getUsername(), elasticProperties.getPassword())
             .build();
     }
 
