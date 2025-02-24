@@ -3,38 +3,27 @@ spring:
     name: hello-search-api
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/ecommerce
+    url: ENC(HdT9qJmmVEkPQ91sXXzMPRlV7TbZwFXHhgyU5WA8OCHOkwZ3QNAEZKUhA0iqkZUzdPbRQd0fh7UHgC6Pa766Ew4IYInSNLrzRJVAh6PzKPU=)
     username: root
-    password: Yeji961126!
+    password: ENC(niQlo3uQx8ZkV3MAqB709P2acAi1Zpc1xP00OnbOMA6qUvKoynjiZ6l0o29NaYU/)
   elasticsearch:
-    # host: 175.118.72.170:9200
-    host: sgyj-dev.synology.me:9200
-    # api-key: MlFhME1wVUI1R2FoaGd0bkxNUGk6cjVzYjhxaU5TQVNvMVNDMTYzYkR4UQ==
-    uris: https://175.118.72.170:9200
+    uris: ENC(L+gqD7a5qEnchYRNi0ZH4fiQqNWKhx4iZ1DOibrRgO8Qx+dmpuOvwpI2hEL6mUoRnP854BKyEpN6BxtIpeInaA==)
     username: elastic
     password: changeme
     connection-timeout: 5s
     socket-timeout: 10s
-    fingerprint: 17:3D:A9:CD:7F:C0:6E:11:99:D1:C4:FE:F7:75:83:59:F4:E0:92:A4:68:9F:6B:9F:7F:34:D4:89:63:FA:21:0F
     restclient:
       ssl:
-        bundle: my-elasticsearch-bundle
+        bundle: elasticsearch
   ssl:
     bundle:
-      my-elasticsearch-bundle:
-        truststore:
-          location: classpath:truststore.p12
-          password: changeit
-          type: PKCS12
-
-    # fingerprint: 17:3D:A9:CD:7F:C0:6E:11:99:D1:C4:FE:F7:75:83:59:F4:E0:92:A4:68:9F:6B:9F:7F:34:D4:89:63:FA:21:0F
-    # fingerprint: 84:C8:36:20:BC:0F:13:4C:8B:CC:1C:E6:16:89:33:0C:B3:E3:AA:53:E0:EC:9A:69:73:E2:9E:D3:85:8B:AF:41
-  #    host: localhost:9200
-#    api-key: uEIFOUF8RLCv8kNaQsgEQA
-#    uris: http://localhost:9200
-#    username: elastic
-#    password: changeme
-#    fingerprint: 8D:54:3B:07:80:55:0B:D1:19:94:72:0D:BF:C6:64:DB:98:25:DD:43:1E:91:DE:3C:82:B2:0E:A3:BA:B3:7B:AE
+      jks:
+        elasticsearch:
+          key:
+            alias: elasticsearch-ca
+          truststore:
+            location: classpath:elasticsearch.jks
+            password: ENC(Azbv/ZYiYzGILGxay0HssEJBghlKVKWCQ2oNYePZ0l2veOYNYulciPEwavFPem8O)
   jpa:
     hibernate:
       ddl-auto: update
@@ -65,3 +54,9 @@ logging:
           elasticsearch:
             client:
               WIRE: trace
+
+
+jasypt:
+  encryptor:
+    bootstrap: true
+    password: ${JASYPT_PASSWORD:test}
