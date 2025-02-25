@@ -1,0 +1,5 @@
+{
+    "index": {
+        "default_pipeline": "merge_product_fields"
+    }
+}

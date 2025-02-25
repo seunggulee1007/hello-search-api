@@ -4,29 +4,20 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProductOptionDetail extends BaseEntity {
+public class Provider extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String value;
-
     @Column(nullable = false)
-    private Integer quantity = 0;
+    private String name;
 
-    private Integer optionOrder = 1;
+    private String description;
 
-    private Integer additionalPrice;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_option_id")
-    private ProductOption productOption;
 
 }

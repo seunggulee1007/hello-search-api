@@ -10,23 +10,16 @@ import lombok.Setter;
 @Table
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ProductOptionDetail extends BaseEntity {
-
+public class ProductImage extends BaseImageEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String value;
-
-    @Column(nullable = false)
-    private Integer quantity = 0;
-
-    private Integer optionOrder = 1;
-
-    private Integer additionalPrice;
+    @Enumerated(EnumType.STRING)
+    private ProductImageType imageType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_option_id")
-    private ProductOption productOption;
+    @JoinColumn(name = "product_id")
+    private Product product;
 
 }
