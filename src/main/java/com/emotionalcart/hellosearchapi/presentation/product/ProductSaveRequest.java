@@ -1,4 +1,4 @@
-package com.emotionalcart.hellosearchapi.presentation;
+package com.emotionalcart.hellosearchapi.presentation.product;
 
 import com.emotionalcart.hellosearchapi.domain.elastic.product.ElasticProduct;
 import com.emotionalcart.hellosearchapi.domain.elastic.product.ElasticProductOption;
@@ -31,7 +31,7 @@ public class ProductSaveRequest {
     private List<ProductOptionRequest> options;
 
     public ElasticProduct mapToElasticProduct() {
-        ElasticProduct.builder()
+        return ElasticProduct.builder()
                 .id(id)
                 .name(name)
                 .description(description)
@@ -53,7 +53,7 @@ public class ProductSaveRequest {
         private List<ProductOptionDetailRequest> details;
 
         public ElasticProductOption mapToElasticProductOption() {
-            ElasticProductOption.builder()
+            return ElasticProductOption.builder()
                     .id(id)
                     .optionName(optionName)
                     .details(details.stream().map(ProductOptionDetailRequest::mapToElasticProductOptionDetail).toList())

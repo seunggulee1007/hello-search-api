@@ -1,12 +1,16 @@
 package com.emotionalcart.hellosearchapi.application.product;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.core.search.SourceConfig;
 import com.emotionalcart.hellosearchapi.domain.elastic.product.ElasticProduct;
+import com.emotionalcart.hellosearchapi.presentation.product.ProductSearchRequest;
+import com.emotionalcart.hellosearchapi.presentation.product.SortOption;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -47,4 +51,28 @@ public class ProductSearchService {
         return response.hits().hits().stream().map(Hit::source).toList();
     }
 
+    public List<ElasticProduct> searchByQuery(ProductSearchRequest searchRequest) throws IOException {
+        Query query = Query.of(q ->
+            q.bool(b -> b.must(m -> m.match(t ->
+                                               t.field("combinedField")
+                                                   .query(searchRequest.getKeyword())
+
+                                   )
+                   ).filter(f -> f.range(RangeQuery.of(r -> r.number(v -> v.field("price").gte((double)searchRequest.getMinPrice()).lte((double)searchRequest.getMaxPrice())))))
+            )
+        );
+        SortOption sortOption = searchRequest.getSortOption();
+        SortOrder sortOrder = sortOption.getDirection().equals("ASC") ? SortOrder.Asc : SortOrder.Desc;
+        SearchRequest request =SearchRequest.of(s -> s.index("product_index")
+            .query(query)
+            .from((searchRequest.getPage()-1) * searchRequest.getSize())
+            .size(searchRequest.getSize())
+
+            .sort(sort -> sort.field(f -> f.field(sortOption.getField())
+                .order(sortOrder))));
+
+
+        SearchResponse<ElasticProduct> response = esClient.search(request, ElasticProduct.class);
+        return response.hits().hits().stream().map(Hit::source).toList();
+    }
 }

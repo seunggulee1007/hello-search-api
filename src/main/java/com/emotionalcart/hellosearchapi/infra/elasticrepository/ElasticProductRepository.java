@@ -1,4 +1,4 @@
-package com.emotionalcart.hellosearchapi.domain.elastic;
+package com.emotionalcart.hellosearchapi.infra.elasticrepository;
 
 import com.emotionalcart.hellosearchapi.domain.elastic.product.ElasticProduct;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;

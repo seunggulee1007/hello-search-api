@@ -1,7 +1,6 @@
-package com.emotionalcart.hellosearchapi.presentation;
+package com.emotionalcart.hellosearchapi.presentation.product;
 
-import com.emotionalcart.hellosearchapi.domain.elastic.product.ElasticProduct;
-import com.emotionalcart.hellosearchapi.domain.elastic.ElasticProductRepository;
+import com.emotionalcart.hellosearchapi.infra.elasticrepository.ElasticProductRepository;
 import com.emotionalcart.hellosearchapi.application.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-public class SaveController {
+public class ProductSaveController {
 
     private final ElasticProductRepository elasticProductRepository;
     private final ProductService productService;

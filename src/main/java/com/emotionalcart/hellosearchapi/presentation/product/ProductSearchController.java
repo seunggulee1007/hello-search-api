@@ -1,4 +1,4 @@
-package com.emotionalcart.hellosearchapi.presentation;
+package com.emotionalcart.hellosearchapi.presentation.product;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -24,7 +25,8 @@ import java.util.Objects;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-public class SearchController {
+@RequestMapping("/api/v1/search")
+public class ProductSearchController {
 
     private final ElasticsearchClient esClient;
     private final ProductSearchService productSearchService;
@@ -106,5 +108,11 @@ public class SearchController {
     public ResponseEntity<List<ElasticProduct>> similar(@PathVariable String productId) throws IOException {
         return ResponseEntity.ok(productSearchService.searchSimilarProduct(productId));
     }
+
+    @GetMapping
+    public ResponseEntity<List<ElasticProduct>> search(ProductSearchRequest searchRequest) throws IOException {
+        return ResponseEntity.ok(productSearchService.searchByQuery(searchRequest));
+    }
+
 
 }

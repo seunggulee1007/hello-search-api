@@ -1,10 +1,10 @@
 package com.emotionalcart.hellosearchapi.application.product;
 
 import com.emotionalcart.hellosearchapi.domain.elastic.product.ElasticProduct;
-import com.emotionalcart.hellosearchapi.domain.elastic.ElasticProductRepository;
+import com.emotionalcart.hellosearchapi.infra.elasticrepository.ElasticProductRepository;
 import com.emotionalcart.hellosearchapi.domain.entity.Product;
 import com.emotionalcart.hellosearchapi.infra.repository.ProductRepository;
-import com.emotionalcart.hellosearchapi.presentation.ProductSaveRequest;
+import com.emotionalcart.hellosearchapi.presentation.product.ProductSaveRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
