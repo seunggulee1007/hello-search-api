@@ -1,14 +1,20 @@
-package com.emotionalcart.hellosearchapi.elastic;
+package com.emotionalcart.hellosearchapi.domain.elastic.product;
 
-import com.emotionalcart.hellosearchapi.entity.ProductOptionDetail;
-import lombok.Getter;
+import com.emotionalcart.hellosearchapi.domain.entity.ProductOptionDetail;
+import lombok.*;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.List;
 
+@Builder
 @Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ElasticProductOptionDetail {
+
+    @Field(type = FieldType.Long)
+    private Long id;
 
     @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori")
     private String optionDetailName;
@@ -21,6 +27,7 @@ public class ElasticProductOptionDetail {
         return details.stream()
                 .map(detail -> {
                     ElasticProductOptionDetail elasticProductOptionDetail = new ElasticProductOptionDetail();
+                    elasticProductOptionDetail.id = detail.getId();
                     elasticProductOptionDetail.optionDetailName = detail.getValue();
                     elasticProductOptionDetail.additionalPrice = detail.getAdditionalPrice();
                     return elasticProductOptionDetail;

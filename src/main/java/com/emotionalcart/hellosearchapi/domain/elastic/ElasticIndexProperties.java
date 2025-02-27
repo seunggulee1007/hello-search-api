@@ -1,4 +1,4 @@
-package com.emotionalcart.hellosearchapi.elastic;
+package com.emotionalcart.hellosearchapi.domain.elastic;
 
 import lombok.Getter;
 import lombok.Setter;

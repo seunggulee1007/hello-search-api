@@ -1,4 +1,4 @@
-package com.emotionalcart.hellosearchapi.entity;
+package com.emotionalcart.hellosearchapi.domain.entity;
 
 import jakarta.persistence.MappedSuperclass;
 import lombok.AccessLevel;

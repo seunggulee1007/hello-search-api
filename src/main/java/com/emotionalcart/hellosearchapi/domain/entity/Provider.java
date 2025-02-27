@@ -1,4 +1,4 @@
-package com.emotionalcart.hellosearchapi.entity;
+package com.emotionalcart.hellosearchapi.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -18,6 +18,5 @@ public class Provider extends BaseEntity {
     private String name;
 
     private String description;
-
 
 }

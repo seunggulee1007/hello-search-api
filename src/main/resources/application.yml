@@ -3,9 +3,9 @@ spring:
     name: hello-search-api
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ENC(HdT9qJmmVEkPQ91sXXzMPRlV7TbZwFXHhgyU5WA8OCHOkwZ3QNAEZKUhA0iqkZUzdPbRQd0fh7UHgC6Pa766Ew4IYInSNLrzRJVAh6PzKPU=)
-    username: root
-    password: ENC(niQlo3uQx8ZkV3MAqB709P2acAi1Zpc1xP00OnbOMA6qUvKoynjiZ6l0o29NaYU/)
+    url: jdbc:mysql://innercircle-ecommerce.ct4smm2qc37u.ap-northeast-2.rds.amazonaws.com:3306/ecommerce
+    username: admin
+    password: KzXIA2t68L7wqAHueJzC
   elasticsearch:
     uris: ENC(L+gqD7a5qEnchYRNi0ZH4fiQqNWKhx4iZ1DOibrRgO8Qx+dmpuOvwpI2hEL6mUoRnP854BKyEpN6BxtIpeInaA==)
     username: elastic
@@ -36,6 +36,7 @@ spring:
         generate_statistics: true
         id:
           new_generator_mappings: true
+        default_batch_fetch_size: 1000
   data:
     elasticsearch:
       repositories:

@@ -1,7 +1,8 @@
-package com.emotionalcart.hellosearchapi.elastic;
+package com.emotionalcart.hellosearchapi.domain.elastic.product;
 
-import com.emotionalcart.hellosearchapi.entity.Product;
-import lombok.Getter;
+import com.emotionalcart.hellosearchapi.domain.entity.Product;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -9,11 +10,16 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 
 import java.util.List;
 
-@Document(indexName = "product_index")
-@Setting(settingPath = "/elasticsearch/settings.json")
+@Builder
 @Getter
+@Document(indexName = "product_index")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Setting(settingPath = "/elasticsearch/settings.json")
 public class ElasticProduct {
 
+    @Field(type = FieldType.Long)
     private Long id;
 
     @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori", copyTo = "combined_field")
