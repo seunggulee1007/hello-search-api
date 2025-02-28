@@ -2,6 +2,7 @@ package com.emotionalcart.hellosearchapi.domain.elastic.product;
 
 import com.emotionalcart.hellosearchapi.domain.entity.Product;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -51,6 +52,7 @@ public class ElasticProduct {
     private String categoryName;
 
     @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori")
+    @JsonIgnore
     private String combinedField;
 
     @Field(type = FieldType.Nested)
