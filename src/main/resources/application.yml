@@ -3,13 +3,13 @@ spring:
     name: hello-search-api
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://innercircle-ecommerce.ct4smm2qc37u.ap-northeast-2.rds.amazonaws.com:3306/ecommerce
-    username: admin
-    password: KzXIA2t68L7wqAHueJzC
+    url: ENC(PeQPP/DmCYF2DwB9D0flFJbOHUDUZg4MKsR3V3a/rP0SkfkoTRCYMHBX5+A4YGKn5ImvkM/MLdqzmZ7yU8FamRUQgVkhbCPbHDqZXUuZsb1Imu0vrfY8R3+Zsm/Tephy7yxztvo9hAgTv9nH496eS7pKjf2oyN9Sq/GkDWFGX47ZwmpohbqW0n2NyDGDoGgWCZNdnENt8Edtg9GD45rW8HSrUJMY9h5FOvg+x34I+Unp4d0AiFZC0GGXBSoaKCouUCemiyfYZcqaHh9CSuW6SQ==)
+    username: ENC(tLzrRHDHhs84MkTtXZBqyjKluVeMcOI8N3yUR/jzvupXTH6ZJKRvK88eWMH8X0sh)
+    password: ENC(alZMwSAh5t1oOLz2MXc0tPdd0n5DjvMT1F12buZsJI0zH7qrA0BLlEEYAtL3PTnuiq5in2gYDW0J/VukNTw3iw==)
   elasticsearch:
-    uris: ENC(L+gqD7a5qEnchYRNi0ZH4fiQqNWKhx4iZ1DOibrRgO8Qx+dmpuOvwpI2hEL6mUoRnP854BKyEpN6BxtIpeInaA==)
-    username: elastic
-    password: changeme
+    uris: ENC(6DB+mHkaEapCDHZYCdZHLBaPjFeygccTOuJO+zoq3Lc+5bOUSu6EkBAme1mSMfOmksi7Z5OYnNsRYAy7cE/Bkg==)
+    username: ENC(FZxHNfyHxSAvFYBwx/pSvWXNMjFZJNwrWYGdCDSbTDWYou3NZEhHxwt2l/g1AplG)
+    password: ENC(tez5cFVgJqHPZYcVIQrTcZnJOPswor0zMYK8aKLeeKWAUQIrQZCKg0qnew+dgpCY)
     connection-timeout: 5s
     socket-timeout: 10s
     restclient:
@@ -23,7 +23,7 @@ spring:
             alias: elasticsearch-ca
           truststore:
             location: classpath:elasticsearch.jks
-            password: ENC(Azbv/ZYiYzGILGxay0HssEJBghlKVKWCQ2oNYePZ0l2veOYNYulciPEwavFPem8O)
+            password: ENC(SriKN5vPXeAyVUJO5OfKUfKM2y0kiYxwH6mB3Acz5o4vrCpxP6QQe8f2WyvwXiXY)
   jpa:
     hibernate:
       ddl-auto: update
@@ -41,11 +41,9 @@ spring:
     elasticsearch:
       repositories:
         enabled: true
-      index:
-        product: product_index
 
 server:
-  port: 9999
+  port: 9998
 
 logging:
   level:
