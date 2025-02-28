@@ -9,6 +9,8 @@ public class ProductSearchRequest {
 
     private String keyword;
 
+    private Long categoryId;
+
     private int page;
 
     private int size;

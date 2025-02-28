@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -20,7 +21,7 @@ public class ElasticProductOption {
     private String optionName;
 
     @Field(type = FieldType.Nested)
-    private List<ElasticProductOptionDetail> details;
+    private List<ElasticProductOptionDetail> details = new ArrayList<>();
 
     public static List<ElasticProductOption> of(List<ProductOption> options) {
 

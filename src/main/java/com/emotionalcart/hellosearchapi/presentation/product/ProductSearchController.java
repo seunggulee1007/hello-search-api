@@ -9,6 +9,8 @@ import co.elastic.clients.elasticsearch.core.search.TotalHits;
 import co.elastic.clients.elasticsearch.core.search.TotalHitsRelation;
 import com.emotionalcart.hellosearchapi.application.product.ProductSearchService;
 import com.emotionalcart.hellosearchapi.domain.elastic.product.ElasticProduct;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,7 @@ public class ProductSearchController {
     private final ElasticsearchClient esClient;
     private final ProductSearchService productSearchService;
 
+    @Hidden
     @GetMapping("/exists/{indexName}/{documentId}")
     public boolean exists(@PathVariable(name = "indexName") String indexName, @PathVariable(name = "documentId") String documentId) throws
         Exception {
@@ -37,6 +40,7 @@ public class ProductSearchController {
             .value();
     }
 
+    @Hidden
     @GetMapping("/search/{indexName}/{fieldName}/{query}")
     public List<String> search(@PathVariable(name = "indexName") String indexName,
                                @PathVariable(name = "fieldName") String fieldName,
@@ -67,6 +71,7 @@ public class ProductSearchController {
             .toList();
     }
 
+    @Hidden
     @GetMapping("/search/keyword/{indexName}/{fieldName}/{query}")
     public List<String> searchKeyword(@PathVariable(name = "indexName") String indexName,
                                @PathVariable(name = "fieldName") String fieldName,
@@ -96,16 +101,19 @@ public class ProductSearchController {
             .toList();
     }
 
+    @Operation(summary = "추천어 검색", description = "입력한 키워드의 유사도를 파악해 5개의 추천어를 준다.")
     @GetMapping("/autocomplete")
-    public ResponseEntity<List<ElasticProduct>> autocomplete(@RequestParam(value="keyword", required = false) String keyword) throws IOException {
-        return ResponseEntity.ok(productSearchService.searchProductByAutocomplete(keyword));
+    public ResponseEntity<List<ElasticProduct>> autocomplete(@RequestParam(value="keyword", required = false) String keyword, @RequestParam(value="requestCount") int requestCount) throws IOException {
+        return ResponseEntity.ok(productSearchService.searchProductByAutocomplete(keyword, requestCount));
     }
 
+    @Operation(summary = "상품 상세 검색", description = "검색한 상품의 유사도를 파악해 n개의 유사 상품을 준다.")
     @GetMapping("/similar/{productId}")
-    public ResponseEntity<List<ElasticProduct>> similar(@PathVariable String productId) throws IOException {
-        return ResponseEntity.ok(productSearchService.searchSimilarProduct(productId));
+    public ResponseEntity<List<ElasticProduct>> similar(@PathVariable String productId, @RequestParam(value="requestCount") int requestCount) throws IOException {
+        return ResponseEntity.ok(productSearchService.searchSimilarProduct(productId, requestCount));
     }
 
+    @Operation(summary = "상품 검색", description = "상품을 검색한다.")
     @GetMapping
     public ResponseEntity<List<ElasticProduct>> search(ProductSearchRequest searchRequest) throws IOException {
         return ResponseEntity.ok(productSearchService.searchByQuery(searchRequest));

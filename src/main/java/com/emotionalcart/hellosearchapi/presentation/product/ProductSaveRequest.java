@@ -5,7 +5,9 @@ import com.emotionalcart.hellosearchapi.domain.elastic.product.ElasticProductOpt
 import com.emotionalcart.hellosearchapi.domain.elastic.product.ElasticProductOptionDetail;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -28,7 +30,8 @@ public class ProductSaveRequest {
 
     private String categoryName;
 
-    private List<ProductOptionRequest> options;
+    @Builder.Default
+    private List<ProductOptionRequest> options = new ArrayList<>();
 
     public ElasticProduct mapToElasticProduct() {
         return ElasticProduct.builder()
@@ -40,7 +43,8 @@ public class ProductSaveRequest {
                 .providerName(providerName)
                 .categoryId(categoryId)
                 .categoryName(categoryName)
-                .options(options.stream().map(ProductOptionRequest::mapToElasticProductOption).toList())
+                .options(
+                    CollectionUtils.isEmpty(options) ? new ArrayList<>() : options.stream().map(ProductOptionRequest::mapToElasticProductOption).toList())
                 .build();
     }
 
@@ -56,7 +60,8 @@ public class ProductSaveRequest {
             return ElasticProductOption.builder()
                     .id(id)
                     .optionName(optionName)
-                    .details(details.stream().map(ProductOptionDetailRequest::mapToElasticProductOptionDetail).toList())
+                    .details(
+                        CollectionUtils.isEmpty(details) ? new ArrayList<>() : details.stream().map(ProductOptionDetailRequest::mapToElasticProductOptionDetail).toList())
                     .build();
         }
 
