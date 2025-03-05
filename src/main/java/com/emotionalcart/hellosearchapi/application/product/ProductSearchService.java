@@ -2,7 +2,6 @@ package com.emotionalcart.hellosearchapi.application.product;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.RangeQuery;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
@@ -19,6 +18,8 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 import java.util.function.Function;
+
+import static com.emotionalcart.hellosearchapi.infra.utils.ElasticSearchUtil.getHighlight;
 
 @Service
 @RequiredArgsConstructor
@@ -63,31 +64,31 @@ public class ProductSearchService {
 
     public List<ElasticProduct> searchByQuery(ProductSearchRequest searchRequest) throws IOException {
         Query query = Query.of(q ->
-            q.bool(b -> b.must(m -> m.match(t ->
-                                               t.field("combinedField")
-                                                   .query(searchRequest.getKeyword())
+                                   q.bool(b -> b.must(m -> m.match(t ->
+                                                                       t.field("combinedField")
+                                                                           .query(searchRequest.getKeyword())
+                                                      )
+                                              ).filter(getFilter(searchRequest))
+                                              .filter(f -> f.range(RangeQuery.of(r -> r.number(v -> v.field("price").gte((double)searchRequest.getMinPrice()).lte(
+                                                  (double)searchRequest.getMaxPrice())))))
                                    )
-                   ).filter(getFilter(searchRequest))
-                .filter(f -> f.range(RangeQuery.of(r -> r.number(v -> v.field("price").gte((double)searchRequest.getMinPrice()).lte((double)searchRequest.getMaxPrice())))))
-            )
         );
         SortOption sortOption = searchRequest.getSortOption();
         SortOrder sortOrder = sortOption.getDirection().equals("ASC") ? SortOrder.Asc : SortOrder.Desc;
-        SearchRequest request =SearchRequest.of(s -> s.index("product_index")
+        SearchRequest request = SearchRequest.of(s -> s.index("product_index")
             .query(query)
-            .from((searchRequest.getPage()-1) * searchRequest.getSize())
+            .from((searchRequest.getPage() - 1) * searchRequest.getSize())
             .size(searchRequest.getSize())
 
             .sort(sort -> sort.field(f -> f.field(sortOption.getField())
-                .order(sortOrder))));
-
+                .order(sortOrder))).highlight(getHighlight()));
 
         SearchResponse<ElasticProduct> response = esClient.search(request, ElasticProduct.class);
         return response.hits().hits().stream().map(Hit::source).toList();
     }
 
     private static Function<Query.Builder, ObjectBuilder<Query>> getFilter(ProductSearchRequest searchRequest) {
-        if(searchRequest.getCategoryId() != null) {
+        if (searchRequest.getCategoryId() != null) {
             return f -> f.term(t -> t.field("categoryId").value(searchRequest.getCategoryId()));
         }
         return f -> f.matchAll(m -> m);

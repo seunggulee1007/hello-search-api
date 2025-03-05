@@ -24,7 +24,7 @@ import java.util.Objects;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/search")
+@RequestMapping("/api/v1/elastic/product")
 public class ProductSearchController {
 
     private final ElasticsearchClient esClient;
@@ -107,7 +107,7 @@ public class ProductSearchController {
         return ResponseEntity.ok(productSearchService.searchProductByAutocomplete(keyword, requestCount));
     }
 
-    @Operation(summary = "상품 상세 검색", description = "검색한 상품의 유사도를 파악해 n개의 유사 상품을 준다.")
+    @Operation(summary = "유사 상품 검색", description = "검색한 상품의 유사도를 파악해 n개의 유사 상품을 준다.")
     @GetMapping("/similar/{productId}")
     public ResponseEntity<List<ElasticProduct>> similar(@PathVariable String productId, @RequestParam(value="requestCount") int requestCount) throws IOException {
         return ResponseEntity.ok(productSearchService.searchSimilarProduct(productId, requestCount));

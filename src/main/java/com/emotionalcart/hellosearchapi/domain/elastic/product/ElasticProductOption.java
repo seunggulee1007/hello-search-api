@@ -1,11 +1,12 @@
 package com.emotionalcart.hellosearchapi.domain.elastic.product;
 
 import com.emotionalcart.hellosearchapi.domain.entity.ProductOption;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.*;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Builder
@@ -15,25 +16,26 @@ import java.util.List;
 public class ElasticProductOption {
 
     @Field(type = FieldType.Long)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori")
     private String optionName;
 
     @Field(type = FieldType.Nested)
-    private List<ElasticProductOptionDetail> details = new ArrayList<>();
+    private List<ElasticProductOptionDetail> details;
 
     public static List<ElasticProductOption> of(List<ProductOption> options) {
 
         return options.stream()
-                .map(option -> {
-                    ElasticProductOption elasticProductOption = new ElasticProductOption();
-                    elasticProductOption.id = option.getId();
-                    elasticProductOption.optionName = option.getName();
-                    elasticProductOption.details = ElasticProductOptionDetail.of(option.getDetails());
-                    return elasticProductOption;
-                })
-                .toList();
+            .map(option -> {
+                ElasticProductOption elasticProductOption = new ElasticProductOption();
+                elasticProductOption.id = option.getId();
+                elasticProductOption.optionName = option.getName();
+                elasticProductOption.details = ElasticProductOptionDetail.of(option.getDetails());
+                return elasticProductOption;
+            })
+            .toList();
     }
 
 }

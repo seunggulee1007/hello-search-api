@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
@@ -15,7 +16,6 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.Setting;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Builder
@@ -28,6 +28,7 @@ import java.util.List;
 public class ElasticProduct {
 
     @Field(type = FieldType.Long)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori", copyTo = "combined_field")
@@ -40,12 +41,14 @@ public class ElasticProduct {
     private Integer price;
 
     @Field(type = FieldType.Long)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long providerId;
 
     @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori", copyTo = "combined_field")
     private String providerName;
 
     @Field(type = FieldType.Long)
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long categoryId;
 
     @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori", copyTo = "combined_field")
@@ -54,6 +57,9 @@ public class ElasticProduct {
     @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori")
     @JsonIgnore
     private String combinedField;
+
+    @Field(type = FieldType.Integer)
+    private Integer salesCount;
 
     @Field(type = FieldType.Nested)
     private List<ElasticProductOption> options;

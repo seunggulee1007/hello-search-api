@@ -27,8 +27,11 @@ public class ElasticOrderItem {
     @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori")
     private String categoryName;
 
+    @Field(type = FieldType.Double)
+    private Double price;
+
     @Field(type = FieldType.Integer)
-    private Integer price;
+    private Integer quantity;
 
     private List<ElasticOrderItemOption> itemOptions;
 
