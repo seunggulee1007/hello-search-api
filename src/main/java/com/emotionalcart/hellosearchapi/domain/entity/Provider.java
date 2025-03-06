@@ -1,5 +1,6 @@
 package com.emotionalcart.hellosearchapi.domain.entity;
 
+import com.emotionalcart.hellosearchapi.domain.elastic.provider.ElasticProvider;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -18,5 +19,13 @@ public class Provider extends BaseEntity {
     private String name;
 
     private String description;
+
+    public ElasticProvider mapToElastic() {
+        return ElasticProvider.builder()
+            .id(id)
+            .name(name)
+            .description(description)
+            .build();
+    }
 
 }
