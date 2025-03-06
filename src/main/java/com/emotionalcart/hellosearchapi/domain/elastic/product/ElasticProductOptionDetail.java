@@ -23,6 +23,9 @@ public class ElasticProductOptionDetail {
     private String optionDetailName;
 
     @Field(type = FieldType.Integer)
+    private Integer optionOrder;
+
+    @Field(type = FieldType.Integer)
     private Integer additionalPrice;
 
     public static List<ElasticProductOptionDetail> of(List<ProductOptionDetail> details) {
@@ -32,6 +35,7 @@ public class ElasticProductOptionDetail {
                 ElasticProductOptionDetail elasticProductOptionDetail = new ElasticProductOptionDetail();
                 elasticProductOptionDetail.id = detail.getId();
                 elasticProductOptionDetail.optionDetailName = detail.getValue();
+                elasticProductOptionDetail.optionOrder = detail.getOptionOrder();
                 elasticProductOptionDetail.additionalPrice = detail.getAdditionalPrice();
                 return elasticProductOptionDetail;
             })
