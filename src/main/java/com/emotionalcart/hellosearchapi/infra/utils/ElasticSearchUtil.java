@@ -10,7 +10,7 @@ public class ElasticSearchUtil {
     public static Highlight getHighlight() {
         return Highlight.of(h -> h
             .fields("combinedField", f -> f
-                .fragmentSize(20)
+                .fragmentSize(50)
                 .numberOfFragments(1)
                 .preTags("<span style=\"color:blue;font-weight:bold;\">")
                 .postTags("</span>")

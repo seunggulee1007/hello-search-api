@@ -23,7 +23,7 @@ spring:
             alias: elasticsearch-ca
           truststore:
             location: classpath:elasticsearch.jks
-            password: ENC(SriKN5vPXeAyVUJO5OfKUfKM2y0kiYxwH6mB3Acz5o4vrCpxP6QQe8f2WyvwXiXY)
+            password: ENC(ft2hocrbSGmoSG4Sbz9hHR1AEpAHiCBzEAWJZcdoWP16YM8IsoR2wog3zTacZHWI)
   jpa:
     hibernate:
       ddl-auto: update

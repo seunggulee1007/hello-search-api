@@ -2,7 +2,6 @@ package com.emotionalcart.hellosearchapi.domain.elastic.product;
 
 import com.emotionalcart.hellosearchapi.domain.entity.Product;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -31,10 +30,10 @@ public class ElasticProduct {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
-    @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori", copyTo = "combined_field")
+    @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori", copyTo = "combinedField")
     private String name;
 
-    @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori", copyTo = "combined_field")
+    @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori", copyTo = "combinedField")
     private String description;
 
     @Field(type = FieldType.Integer)
@@ -44,18 +43,17 @@ public class ElasticProduct {
     @JsonSerialize(using = ToStringSerializer.class)
     private Long providerId;
 
-    @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori", copyTo = "combined_field")
+    @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori", copyTo = "combinedField")
     private String providerName;
 
     @Field(type = FieldType.Long)
     @JsonSerialize(using = ToStringSerializer.class)
     private Long categoryId;
 
-    @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori", copyTo = "combined_field")
+    @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori", copyTo = "combinedField")
     private String categoryName;
 
     @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori")
-    @JsonIgnore
     private String combinedField;
 
     @Field(type = FieldType.Integer)

@@ -16,14 +16,16 @@ class JasyptTest {
 
     @Test
     @DisplayName("암호화 테스트")
-    void encrypt () {
+    void encrypt() {
         // given
-        String text = "이너서클 이커머스";
+        String text = "changeit";
         // when
         String encryptedText = jasyptStringEncryptor.encrypt(text);
+        System.err.println(encryptedText);
         String decryptedText = jasyptStringEncryptor.decrypt(encryptedText);
         // then
         assertThat(text).isEqualTo(decryptedText);
 
     }
+
 }
