@@ -41,6 +41,10 @@ spring:
     elasticsearch:
       repositories:
         enabled: true
+    redis:
+      host: ${REDIS_SERVER_HOST:localhost} # Redis server IP address
+      port: ${REDIS_SERVER_PORT:6379} # Redis server port
+      timeout: 2000 # Connection timeout (in milliseconds)
   rabbitmq:
     host: localhost
     port: 5672
