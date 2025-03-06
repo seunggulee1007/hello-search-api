@@ -34,7 +34,7 @@ public class OrderSearchService {
             .query(getQuery(query))
             .from(getFrom(condition))
             .size(condition.getSize())
-            //.sort(sort -> sort.field(f -> f.field("orderAt").order(sortOrder)))
+            .sort(sort -> sort.field(f -> f.field("orderAt").order(sortOrder)))
             .highlight(getHighlight())
         );
         SearchResponse<ElasticOrder> response = esClient.search(searchRequest, ElasticOrder.class);

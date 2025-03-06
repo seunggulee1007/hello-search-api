@@ -12,7 +12,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category extends BaseEntity {
-    // category : 양방향 연관관계를 설정하여, 자식 엔티티에서 부모 엔티티를 참조할 뿐만 아니라, 부모 엔티티에서도 자식 엔티티를 참조
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
