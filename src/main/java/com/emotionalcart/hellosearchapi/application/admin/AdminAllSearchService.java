@@ -8,6 +8,8 @@ import com.emotionalcart.hellosearchapi.application.banner.BannerSearchService;
 import com.emotionalcart.hellosearchapi.application.order.OrderSearchResponse;
 import com.emotionalcart.hellosearchapi.application.order.OrderSearchService;
 import com.emotionalcart.hellosearchapi.application.product.ProductSearchService;
+import com.emotionalcart.hellosearchapi.application.provider.ProviderSearchResponse;
+import com.emotionalcart.hellosearchapi.application.provider.ProviderSearchService;
 import com.emotionalcart.hellosearchapi.presentation.common.AllSearchCondition;
 import com.emotionalcart.hellosearchapi.presentation.product.ProductAdminResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,13 +26,15 @@ public class AdminAllSearchService {
     private final ProductSearchService productSearchService;
     private final OrderSearchService orderSearchService;
     private final BannerSearchService bannerSearchService;
+    private final ProviderSearchService providerSearchService;
 
     public AdminSearchResponse searchAll(AllSearchCondition condition) throws IOException {
         Query query = byFullTextOr(condition.getKeyword());
         List<ProductAdminResponse> products = productSearchService.searchAdminByQuery(condition, query);
         List<OrderSearchResponse> orders = orderSearchService.searchByQuery(condition, query);
         List<BannerSearchResponse> banners = bannerSearchService.searchBanners(condition, query);
-        return AdminSearchResponse.of(products, orders, banners);
+        List<ProviderSearchResponse> providers = providerSearchService.searchByQuery(condition, query);
+        return AdminSearchResponse.of(products, orders, banners, providers);
     }
 
     private static Query byFullTextOr(String orMatchTexts) {
