@@ -67,3 +67,7 @@ jasypt:
   encryptor:
     bootstrap: true
     password: ${JASYPT_PASSWORD:test}
+
+app:
+  allow-domains:
+    - localhost:5173
