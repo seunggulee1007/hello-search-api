@@ -84,6 +84,7 @@ public class ProductSearchService {
                                                )
                                        ).filter(categoryIdFilter(searchRequest))
                                        .filter(minMaxPriceFilter(searchRequest))
+                                       .filter(f -> f.match(fm -> fm.field("isDeleted").query(false)))
                             )
         );
     }

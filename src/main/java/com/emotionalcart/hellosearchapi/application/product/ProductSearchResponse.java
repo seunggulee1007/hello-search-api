@@ -1,6 +1,7 @@
 package com.emotionalcart.hellosearchapi.application.product;
 
 import com.emotionalcart.hellosearchapi.domain.elastic.product.ElasticProduct;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Getter;
@@ -30,9 +31,10 @@ public class ProductSearchResponse {
 
     private String categoryName;
 
-    private String combinedField;
-
     private Integer salesCount;
+
+    @JsonProperty("isDeleted")
+    private boolean deleted;
 
     private List<ProductOptionResponse> options;
 
@@ -48,8 +50,8 @@ public class ProductSearchResponse {
         response.providerName = result.getProviderName();
         response.categoryId = result.getCategoryId();
         response.categoryName = result.getCategoryName();
-        response.combinedField = result.getCombinedField();
         response.salesCount = result.getSalesCount();
+        response.deleted = result.isDeleted();
         response.createdAt = result.getCreatedAt();
         response.options = result.getOptions().stream()
             .map(option -> {
@@ -63,6 +65,7 @@ public class ProductSearchResponse {
                         detailResponse.id = detail.getId();
                         detailResponse.optionDetailName = detail.getOptionDetailName();
                         detailResponse.additionalPrice = detail.getAdditionalPrice();
+                        detailResponse.optionOrder = detail.getOptionOrder();
                         return detailResponse;
                     })
                     .toList();
@@ -87,6 +90,7 @@ public class ProductSearchResponse {
             @JsonSerialize(using = ToStringSerializer.class)
             private Long id;
             private String optionDetailName;
+            private Integer optionOrder;
             private Integer additionalPrice;
 
         }

@@ -15,7 +15,7 @@ public class AdminSearchResponse {
 
     private List<OrderSearchResponse> orders;
     private List<BannerSearchResponse> banners;
-    List<ProviderSearchResponse> providers;
+    private List<ProviderSearchResponse> providers;
 
     public static AdminSearchResponse of(List<ProductAdminResponse> products, List<OrderSearchResponse> orders,
                                          List<BannerSearchResponse> banners, List<ProviderSearchResponse> providers) {

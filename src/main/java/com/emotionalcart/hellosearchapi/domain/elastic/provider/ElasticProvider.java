@@ -23,6 +23,9 @@ public class ElasticProvider {
 
     private Long id;
 
+    @Field(type = FieldType.Boolean, name = "isDeleted")
+    private boolean deleted;
+
     @Field(type = FieldType.Text, analyzer = "nori", searchAnalyzer = "nori", copyTo = "combinedField")
     private String name;
 

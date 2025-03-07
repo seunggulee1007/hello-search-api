@@ -59,6 +59,9 @@ public class ElasticProduct {
     @Field(type = FieldType.Integer)
     private Integer salesCount;
 
+    @Field(type = FieldType.Boolean, name = "isDeleted")
+    private boolean deleted;
+
     @Field(type = FieldType.Nested)
     private List<ElasticProductOption> options;
 
@@ -79,6 +82,8 @@ public class ElasticProduct {
         elasticProduct.categoryId = product.getCategory().getId();
         elasticProduct.categoryName = product.getCategory().getName();
         elasticProduct.options = ElasticProductOption.of(product.getOptions());
+        elasticProduct.salesCount = 0;
+        elasticProduct.deleted = product.isDeleted();
         elasticProduct.createdAt = product.getCreatedAt();
         return elasticProduct;
     }
