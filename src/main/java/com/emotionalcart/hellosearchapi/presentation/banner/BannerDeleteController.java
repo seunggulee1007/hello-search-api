@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/banners")
@@ -17,7 +19,7 @@ public class BannerDeleteController {
 
     @Operation(summary = "배너 삭제", description = "배너를 삭제합니다.")
     @DeleteMapping("/{bannerId}")
-    public void deleteBanner(@PathVariable("bannerId") Long bannerId) {
+    public void deleteBanner(@PathVariable("bannerId") Long bannerId) throws IOException {
         bannerDeleteService.deleteBanner(bannerId);
     }
 
