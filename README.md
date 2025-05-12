@@ -15,6 +15,7 @@ ElasticSearch 기반의 E-commerce 상품 검색 API
 - Gradle 8.x
 
 ## 프로젝트 구조
+```
 hello-search-api/
 ├── api/               # 검색 API Controller
 ├── config/            # ElasticSearch 클라이언트 설정
@@ -23,7 +24,7 @@ hello-search-api/
 ├── repository/        # ElasticSearch 쿼리 수행 레이어
 ├── service/           # 검색 비즈니스 로직
 └── HelloSearchApiApplication.java
-
+```
 ## 주요 기능
 
 - 상품명 키워드 검색
